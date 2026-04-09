@@ -1,0 +1,9 @@
+CPU: AMD64 generic, speed 5134.89 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (CPU Clocks not Halted) with a unit mask of 0x00 (No unit mask) count 100000
+samples  %        symbol name
+287922   81.5384  dct
+18937     5.3629  my_round
+7080      2.0050  bm_get_pixel
+5037      1.4265  bm_get_pixel_array
+5020      1.4216  RGB_to_Y
+3749      1.0617  RGB_to_Cb

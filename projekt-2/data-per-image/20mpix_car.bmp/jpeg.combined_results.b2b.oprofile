@@ -1,0 +1,34 @@
+
+Statistics per run (over 30 runs) of the number of times each procedure was sampled OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  jpeg                  RGB_to_Cb                                      3659.77        3168.699    [  2525.862,   4793.671]
+  jpeg                  RGB_to_Y                                       4562.77         452.872    [  4400.709,   4724.825]
+  jpeg                  bm_get_pixel                                   7326.13         526.872    [  7137.595,   7514.672]
+  jpeg                  bm_get_pixel_array                             4669.70         542.246    [  4475.660,   4863.740]
+  jpeg                  dct                                          286188.07        2787.578    [285190.545, 287185.589]
+  jpeg                  my_round                                      20505.33        2753.131    [ 19520.138,  21490.529]
+  jpeg                  quantization                                   1674.57        2548.376    [   762.642,   2586.491]
+  libc.so.6             fgetc                                           240.90         916.966    [   -87.232,    569.032]
+  main app              RGB_to_Cr                                       506.50        1561.015    [   -52.102,   1065.102]
+  main app              bm_get_pixel_at                                 240.73         916.163    [   -87.111,    568.578]
+
+Statistics per run (over 30 runs) of the percentage of execution time spent in each procedure, as measured by OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  jpeg                  RGB_to_Cb                                        1.11%          0.961%    [    0.766%,     1.455%]
+  jpeg                  RGB_to_Y                                         1.38%          0.137%    [    1.335%,     1.434%]
+  jpeg                  bm_get_pixel                                     2.22%          0.160%    [    2.166%,     2.280%]
+  jpeg                  bm_get_pixel_array                               1.42%          0.165%    [    1.358%,     1.476%]
+  jpeg                  dct                                             86.84%          0.846%    [   86.533%,    87.138%]
+  jpeg                  my_round                                         6.22%          0.835%    [    5.923%,     6.521%]
+  jpeg                  quantization                                     0.51%          0.773%    [    0.231%,     0.785%]
+  libc.so.6             fgetc                                            0.07%          0.278%    [   -0.026%,     0.173%]
+  main app              RGB_to_Cr                                        0.15%          0.474%    [   -0.016%,     0.323%]
+  main app              bm_get_pixel_at                                  0.07%          0.278%    [   -0.026%,     0.173%]
+
+Total Samples per run (over 30 runs):
+                                                                       Average         Std Dev    95% Confidence Interval
+                                                                       -------         -------    -----------------------
+  total_samples                                                      329574.47        5659.153    [327549.365, 331599.569]
+

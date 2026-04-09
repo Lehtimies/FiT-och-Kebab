@@ -1,0 +1,38 @@
+
+Statistics per run (over 30 runs) of the number of times each procedure was sampled OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  libc.so.6             fgetc                                             9.87          25.652    [     0.687,     19.046]
+  main app              RGB_to_Cb                                       129.20          21.610    [   121.467,    136.933]
+  main app              RGB_to_Cr                                        61.30          39.115    [    47.303,     75.297]
+  main app              RGB_to_Y                                         56.80          32.404    [    45.204,     68.396]
+  main app              adjustMatrix                                      4.30          16.340    [    -1.547,     10.147]
+  main app              bm_get_pixel                                    100.43          20.025    [    93.267,    107.599]
+  main app              bm_get_pixel_array                               59.57          34.264    [    47.306,     71.828]
+  main app              dct                                            4848.07          30.676    [  4837.090,   4859.044]
+  main app              my_round                                        399.83          37.630    [   386.368,    413.299]
+  main app              quantization                                    179.87          26.721    [   170.305,    189.429]
+  main app              rlc_vlc_encode                                    9.17          23.791    [     0.653,     17.680]
+  main app              zigzag                                            2.47          13.491    [    -2.361,      7.294]
+
+Statistics per run (over 30 runs) of the percentage of execution time spent in each procedure, as measured by OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  libc.so.6             fgetc                                            0.17%          0.438%    [    0.012%,     0.325%]
+  main app              RGB_to_Cb                                        2.20%          0.369%    [    2.073%,     2.336%]
+  main app              RGB_to_Cr                                        1.05%          0.667%    [    0.807%,     1.285%]
+  main app              RGB_to_Y                                         0.97%          0.553%    [    0.771%,     1.167%]
+  main app              adjustMatrix                                     0.07%          0.279%    [   -0.026%,     0.173%]
+  main app              bm_get_pixel                                     1.71%          0.342%    [    1.591%,     1.836%]
+  main app              bm_get_pixel_array                               1.02%          0.585%    [    0.807%,     1.226%]
+  main app              dct                                             82.72%          0.523%    [   82.532%,    82.907%]
+  main app              my_round                                         6.82%          0.642%    [    6.592%,     7.052%]
+  main app              quantization                                     3.07%          0.456%    [    2.906%,     3.232%]
+  main app              rlc_vlc_encode                                   0.16%          0.406%    [    0.011%,     0.302%]
+  main app              zigzag                                           0.04%          0.230%    [   -0.040%,     0.124%]
+
+Total Samples per run (over 30 runs):
+                                                                       Average         Std Dev    95% Confidence Interval
+                                                                       -------         -------    -----------------------
+  total_samples                                                        5860.87          52.783    [  5841.979,   5879.755]
+

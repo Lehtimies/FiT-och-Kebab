@@ -1,0 +1,34 @@
+
+Statistics per run (over 30 runs) of the number of times each procedure was sampled OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  main app              RGB_to_Cb                                       332.20         198.217    [   261.269,    403.131]
+  main app              RGB_to_Cr                                        31.53         121.400    [   -11.909,     74.976]
+  main app              RGB_to_Y                                        479.47          39.090    [   465.479,    493.455]
+  main app              bm_get_pixel                                    749.67          47.392    [   732.708,    766.626]
+  main app              bm_get_pixel_array                              413.63         120.623    [   370.469,    456.798]
+  main app              bm_get_pixel_at                                  38.17         116.477    [    -3.514,     79.848]
+  main app              dct                                           29919.90         189.639    [ 29852.039,  29987.761]
+  main app              my_round                                       2353.50         184.144    [  2287.605,   2419.395]
+  main app              quantization                                    381.20         174.949    [   318.595,    443.805]
+  main app              rlc_vlc_encode                                  184.13         200.445    [   112.405,    255.861]
+
+Statistics per run (over 30 runs) of the percentage of execution time spent in each procedure, as measured by OProfile:
+  App/Library           Procedure                                      Average         Std Dev    95% Confidence Interval
+  -----------           ---------                                      -------         -------    -----------------------
+  main app              RGB_to_Cb                                        0.95%          0.568%    [    0.749%,     1.156%]
+  main app              RGB_to_Cr                                        0.09%          0.348%    [   -0.034%,     0.215%]
+  main app              RGB_to_Y                                         1.37%          0.112%    [    1.334%,     1.415%]
+  main app              bm_get_pixel                                     2.15%          0.136%    [    2.100%,     2.198%]
+  main app              bm_get_pixel_array                               1.19%          0.346%    [    1.062%,     1.309%]
+  main app              bm_get_pixel_at                                  0.11%          0.334%    [   -0.010%,     0.229%]
+  main app              dct                                             85.77%          0.544%    [   85.577%,    85.966%]
+  main app              my_round                                         6.75%          0.528%    [    6.558%,     6.936%]
+  main app              quantization                                     1.09%          0.502%    [    0.913%,     1.272%]
+  main app              rlc_vlc_encode                                   0.53%          0.575%    [    0.322%,     0.733%]
+
+Total Samples per run (over 30 runs):
+                                                                       Average         Std Dev    95% Confidence Interval
+                                                                       -------         -------    -----------------------
+  total_samples                                                       34883.40         360.612    [ 34754.357,  35012.443]
+
