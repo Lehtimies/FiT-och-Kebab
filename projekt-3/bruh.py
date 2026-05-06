@@ -1,11 +1,4 @@
-"""
-=============================================================
-Forskningsmetodik för IT - Projekt 3
-Titel:  Hälsa och välfärd i Finland – en dataanalys
-Källa:  THL Sotkanet API  https://sotkanet.fi
-        CC BY 4.0 – Terveyden ja hyvinvoinnin laitos (THL)
-=============================================================
-"""
+
 
 import requests
 import pandas as pd
@@ -25,7 +18,7 @@ def fetch_data(indicator_id, years, gender="total"):
         params.append(("years", y))
     r = requests.get(f"{BASE_URL}/json", headers=HEADERS, params=params)
     if r.status_code != 200:
-        print(f"  WARNING: indicator {indicator_id} returned HTTP {r.status_code}")
+        print(f"  VARNING: indikator {indicator_id} returnerade HTTP {r.status_code}")
         return pd.DataFrame()
     data = r.json()
     return pd.DataFrame(data) if data else pd.DataFrame()
@@ -52,14 +45,14 @@ def savefig(filename):
     plt.tight_layout()
     plt.savefig(path, dpi=150)
     plt.close()
-    print(f"  Saved: {path}")
+    print(f"  Sparad: {path}")
 
 
 def line_chart(x, y, title, ylabel, color, filename):
     plt.figure(figsize=(9, 4))
     plt.plot(x, y, marker="o", color=color, linewidth=2)
     plt.title(title)
-    plt.xlabel("Year")
+    plt.xlabel("År")
     plt.ylabel(ylabel)
     plt.xticks(x, rotation=45)
     # Smart y-axis: zoom in if the data range is narrow relative to its magnitude
@@ -83,171 +76,157 @@ def bar_chart(names, values, title, xlabel, color, filename):
     savefig(filename)
 
 
-def section(title):
-    print("\n" + "=" * 60)
-    print(f"  {title}")
-    print("=" * 60)
-
-
-# ── Load regions ──────────────────────────────────────────────────────────────
-print("Loading regions...")
+print("Laddar regioner...")
 regions_raw = fetch_regions()
 region_map = {r["id"]: r["title"].get("fi", "") for r in regions_raw}
 NAT_ID = next(r["id"] for r in regions_raw if "koko maa" in r["title"].get("fi","").lower())
 MAA_IDS = [r["id"] for r in regions_raw if r.get("category") == "MAAKUNTA"]
 
+ 
 
-# =============================================================================
-# TOPIC 1 – SUBSTANCE USE
-# =============================================================================
-section("TOPIC 1 – SUBSTANCE USE")
 
-# Q1 (visual): Alcohol consumption per capita trend
-print("\nQ1: How has alcohol consumption per capita changed nationally?")
+# Q1 Alkohol konsumption
+print("\nQ1: Hur har alkoholkonsumtionen per capita förändrats på nationell nivå?")
 df = fetch_data(1806, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q1: Alcohol consumption per capita (litres pure alcohol), Finland",
-               "Litres / inhabitant", "#2196F3", "q1_alcohol_consumption.png")
+               "Q1: Alkoholkonsumtion per capita (liter ren alkohol), Finland",
+               "Liter / invånare", "#2196F3", "q1_alcohol_consumption.png")
 
-# Q2 (visual): Alcohol sales by province
-print("\nQ2: Which provinces have the highest alcohol sales per capita?")
+# Q2 Alkoholförsäljning per provins
+print("\nQ2: Vilka provinser har högst alkoholförsäljning per capita?")
 df = fetch_data(714, [2022, 2021])
 if not df.empty:
     maa = province_latest(df, MAA_IDS, region_map)
     print(maa[["region_name", "value"]].to_string(index=False))
     bar_chart(maa["region_name"], maa["value"],
-              "Q2: Alcohol sales per capita by province (litres pure alcohol)",
-              "Litres / inhabitant", "#FF9800", "q2_alcohol_sales_province.png")
+              "Q2: Alkoholförsäljning per capita per provins (liter ren alkohol)",
+              "Liter / invånare", "#FF9800", "q2_alcohol_sales_province.png")
 
-# Q3 (no visual): Which year had the highest alcohol consumption?
-print("\nQ3: Which year had the highest alcohol consumption nationally?")
+# Q3 Högsta alkoholkonsumtion
+print("\nQ3: Vilket år hade högst alkoholkonsumtion på nationell nivå?")
 df = fetch_data(1806, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     peak = nat.loc[nat["value"].idxmax()]
-    print(f"  Peak year: {int(peak['year'])} with {peak['value']:.1f} litres per capita")
+    print(f"  Toppår: {int(peak['year'])} med {peak['value']:.1f} liter per capita")
 
 
 # =============================================================================
 # TOPIC 2 – MENTAL HEALTH
 # =============================================================================
-section("TOPIC 2 – MENTAL HEALTH")
 
-# Q4 (visual): Psychiatric outpatient visits trend
-print("\nQ4: How have psychiatric outpatient visits changed nationally?")
+# Q4 Psykiatriska öppenvårdsbesök
+print("\nQ4: Hur har psykiatriska öppenvårdsbesök förändrats på nationell nivå?")
 df = fetch_data(1272, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q4: Psychiatric outpatient visits / 1 000 inhabitants, Finland",
-               "Visits / 1 000", "#00BCD4", "q4_psychiatric_outpatient.png")
+               "Q4: Psykiatriska öppenvårdsbesök / 1 000 invånare, Finland",
+               "Besök / 1 000", "#00BCD4", "q4_psychiatric_outpatient.png")
 
-# Q5 (visual): Suicide mortality trend
-print("\nQ5: How has suicide mortality changed over time?")
+# Q5 Suicidmortalitet
+print("\nQ5: Hur har suicidmortaliteten förändrats över tiden?")
 df = fetch_data(179, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q5: Suicide mortality (age-standardised / 100 000), Finland",
-               "Deaths / 100 000", "#607D8B", "q5_suicide_mortality.png")
+               "Q5: Suicidmortalitet (åldersstandard / 100 000), Finland",
+               "Dödsfall / 100 000", "#607D8B", "q5_suicide_mortality.png")
 
-# Q6 (visual): Psychiatric hospital care for children by gender
-print("\nQ6: Do boys or girls receive more psychiatric hospital care (ages 0-17)?")
+# Q6 Psykiatrisk sjukhusvård barn per kön
+print("\nQ6: Får pojkar eller flickor mer psykiatrisk sjukhusvård (ålder 0-17)?")
 df_m = fetch_data(4, YEARS, gender="male")
 df_f = fetch_data(4, YEARS, gender="female")
 if not df_m.empty and not df_f.empty:
     nat_m = national_series(df_m, NAT_ID)
     nat_f = national_series(df_f, NAT_ID)
-    print("Male:"); print(nat_m[["year", "value"]].to_string(index=False))
-    print("Female:"); print(nat_f[["year", "value"]].to_string(index=False))
+    print("Man:"); print(nat_m[["year", "value"]].to_string(index=False))
+    print("Kvinna:"); print(nat_f[["year", "value"]].to_string(index=False))
     plt.figure(figsize=(9, 4))
-    plt.plot(nat_m["year"], nat_m["value"], marker="o", label="Male", color="#2196F3", linewidth=2)
-    plt.plot(nat_f["year"], nat_f["value"], marker="o", label="Female", color="#E91E63", linewidth=2)
-    plt.title("Q6: Psychiatric hospital care for 0-17 year olds / 1 000, by gender")
-    plt.xlabel("Year"); plt.ylabel("Per 1 000")
+    plt.plot(nat_m["year"], nat_m["value"], marker="o", label="Man", color="#2196F3", linewidth=2)
+    plt.plot(nat_f["year"], nat_f["value"], marker="o", label="Kvinna", color="#E91E63", linewidth=2)
+    plt.title("Q6: Psykiatrisk sjukhusvård för 0-17 åringar / 1 000, per kön")
+    plt.xlabel("År"); plt.ylabel("Per 1 000")
     plt.xticks(nat_m["year"], rotation=45)
     plt.ylim(bottom=0, top=max(nat_m["value"].max(), nat_f["value"].max()) * 1.2)
     plt.legend(); plt.grid(axis="y", alpha=0.4)
     savefig("q6_youth_mental_health_gender.png")
 
-# Q7 (no visual): Average suicide rate over the period
-print("\nQ7: What was the average suicide mortality rate between 2010 and 2023?")
+# Q7 Genomsnittlig suicidmortalitet
+print("\nQ7: Vad var den genomsnittliga suicidmortaliteten mellan 2010 och 2023?")
 df = fetch_data(179, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     avg = nat["value"].mean()
-    print(f"  Average suicide mortality 2010-2023: {avg:.1f} per 100 000")
+    print(f"  Genomsnittlig suicidmortalitet 2010-2023: {avg:.1f} per 100 000")
 
 
 # =============================================================================
 # TOPIC 3 – SOCIOECONOMIC FACTORS
 # =============================================================================
-section("TOPIC 3 – SOCIOECONOMIC FACTORS")
 
-# Q8 (visual): Social assistance trend
-print("\nQ8: How has the share of social assistance recipients (25-64) changed?")
+# Q8 Socialbidrag
+print("\nQ8: Hur har andelen socialbidragsmottagare (25-64) förändrats?")
 df = fetch_data(5, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q8: Social assistance recipients aged 25-64 (%), Finland",
-               "% of age group", "#FFC107", "q8_social_assistance.png")
+               "Q8: Socialbidragsmottagare i åldern 25-64 (%), Finland",
+               "% av åldersgruppen", "#FFC107", "q8_social_assistance.png")
 
-# Q9 (visual): Social assistance by province
-print("\nQ9: Which provinces have the highest social assistance rates?")
+# Q9 Socialbidrag per provins
+print("\nQ9: Vilka provinser har högst socialbidragsfrekvenser?")
 df = fetch_data(5, [2022, 2021])
 if not df.empty:
     maa = province_latest(df, MAA_IDS, region_map)
     print(maa[["region_name", "value"]].to_string(index=False))
     bar_chart(maa["region_name"], maa["value"],
-              "Q9: Social assistance recipients 25-64 (%) by province",
-              "% of age group", "#FFCA28", "q9_social_assistance_province.png")
+              "Q9: Socialbidragsmottagare 25-64 (%) per provins",
+              "% av åldersgruppen", "#FFCA28", "q9_social_assistance_province.png")
 
-# Q10 (no visual): School dropout rate latest value
-print("\nQ10: What is the current school dropout rate among 17-24 year olds?")
+# Q10 Skolavhoppningsfrekvens
+print("\nQ10: Vad är den nuvarande skolavhoppningsfrekvensen bland 17-24 åringar?")
 df = fetch_data(234, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     latest = nat.iloc[-1]
-    print(f"  Most recent year {int(latest['year'])}: {latest['value']:.1f}% without qualification")
+    print(f"  Senaste året {int(latest['year'])}: {latest['value']:.1f}% utan kvalifikation")
 
 
 # =============================================================================
 # TOPIC 4 – CHILDREN & YOUTH
 # =============================================================================
-section("TOPIC 4 – CHILDREN & YOUTH")
 
-# Q11 (visual): School dropouts trend
-print("\nQ11: How has the school dropout rate among 17-24 year olds changed over time?")
+# Q11 Skolavhoppningsfrekvens trend
+print("\nQ11: Hur har skolavhoppningsfrekvensen bland 17-24 åringar förändrats över tiden?")
 df = fetch_data(234, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q11: School dropouts aged 17-24 (% without qualification), Finland",
-               "% of age group", "#3F51B5", "q11_school_dropouts.png")
+               "Q11: Skolavhoppare i åldern 17-24 (% utan kvalifikation), Finland",
+               "% av åldersgruppen", "#3F51B5", "q11_school_dropouts.png")
 
-# Q12 (visual): Youth overweight trend
-print("\nQ12: How has overweight/obesity among 8th-9th graders changed over time?")
+# Q12 Ungdomars övervikt
+print("\nQ12: Hur har övervikt/fetma bland 8:e-9:e klassare förändrats över tiden?")
 df = fetch_data(3052, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q12: Overweight or obese 8th-9th graders (%), Finland",
-               "% of students", "#8BC34A", "q12_youth_overweight.png")
+               "Q12: Överviktiga eller feta 8:e-9:e klassare (%), Finland",
+               "% av eleverna", "#8BC34A", "q12_youth_overweight.png")
 
 
 # =============================================================================
 # SUMMARY
 # =============================================================================
-section("ALL DONE")
-print(f"\nOutput saved to ./{OUTPUT_DIR}/")
+print(f"\nUtdata sparad i ./{OUTPUT_DIR}/")
 for f in sorted(os.listdir(OUTPUT_DIR)):
     print(f"  {f}")
