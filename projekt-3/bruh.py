@@ -114,10 +114,6 @@ if not df.empty:
     print(f"  Toppår: {int(peak['year'])} med {peak['value']:.1f} liter per capita")
 
 
-# =============================================================================
-# TOPIC 2 – MENTAL HEALTH
-# =============================================================================
-
 # Q4 Psykiatriska öppenvårdsbesök
 print("\nQ4: Hur har psykiatriska öppenvårdsbesök förändrats på nationell nivå?")
 df = fetch_data(1272, YEARS)
@@ -166,9 +162,6 @@ if not df.empty:
     print(f"  Genomsnittlig suicidmortalitet 2010-2023: {avg:.1f} per 100 000")
 
 
-# =============================================================================
-# TOPIC 3 – SOCIOECONOMIC FACTORS
-# =============================================================================
 
 # Q8 Socialbidrag
 print("\nQ8: Hur har andelen socialbidragsmottagare (25-64) förändrats?")
@@ -199,9 +192,7 @@ if not df.empty:
     print(f"  Senaste året {int(latest['year'])}: {latest['value']:.1f}% utan kvalifikation")
 
 
-# =============================================================================
-# TOPIC 4 – CHILDREN & YOUTH
-# =============================================================================
+
 
 # Q11 Skolavhoppningsfrekvens trend
 print("\nQ11: Hur har skolavhoppningsfrekvensen bland 17-24 åringar förändrats över tiden?")
@@ -224,9 +215,6 @@ if not df.empty:
                "% av eleverna", "#8BC34A", "q12_youth_overweight.png")
 
 
-# =============================================================================
-# SUMMARY
-# =============================================================================
 print(f"\nUtdata sparad i ./{OUTPUT_DIR}/")
 for f in sorted(os.listdir(OUTPUT_DIR)):
     print(f"  {f}")
