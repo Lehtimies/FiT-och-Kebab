@@ -36,7 +36,7 @@ def national_series(df, nat_id):
     return df[df["region"] == nat_id].sort_values("year")
 
 
-# Hämtar senaste värdet per provins och sorterar efter värde, störst först
+# Hämtar senaste värdet per landskap och sorterar efter värde, störst först
 def province_latest(df, maa_ids, rmap):
     d = df[df["region"].isin(maa_ids)].copy()
     d = d.sort_values("year", ascending=False).drop_duplicates("region")
@@ -102,14 +102,14 @@ if not df.empty:
                "Q1: Alkoholkonsumtion per capita (liter ren alkohol), Finland",
                "Liter / invånare", "#2196F3", "q1_alcohol_consumption.png")
 
-# Q2 Alkoholförsäljning per provins
-print("\nQ2: Vilka provinser har högst alkoholförsäljning per capita?")
+# Q2 Alkoholförsäljning per landskap
+print("\nQ2: Vilka landskap har högst alkoholförsäljning per capita?")
 df = fetch_data(714, [2022, 2021])
 if not df.empty:
     maa = province_latest(df, MAA_IDS, region_map)
     print(maa[["region_name", "value"]].to_string(index=False))
     bar_chart(maa["region_name"], maa["value"],
-              "Q2: Alkoholförsäljning per capita per provins (liter ren alkohol)",
+              "Q2: Alkoholförsäljning per capita per landskap (liter ren alkohol)",
               "Liter / invånare", "#FF9800", "q2_alcohol_sales_province.png")
 
 # Q3 Högsta alkoholkonsumtion
@@ -180,14 +180,14 @@ if not df.empty:
                "Q8: Socialbidragsmottagare i åldern 25-64 (%), Finland",
                "% av åldersgruppen", "#FFC107", "q8_social_assistance.png")
 
-# Q9 Socialbidrag per provins
-print("\nQ9: Vilka provinser har högst socialbidragsfrekvenser?")
+# Q9 Socialbidrag per landskap
+print("\nQ9: Vilka landskap har högst socialbidragsfrekvenser?")
 df = fetch_data(5, [2022, 2021])
 if not df.empty:
     maa = province_latest(df, MAA_IDS, region_map)
     print(maa[["region_name", "value"]].to_string(index=False))
     bar_chart(maa["region_name"], maa["value"],
-              "Q9: Socialbidragsmottagare 25-64 (%) per provins",
+              "Q9: Socialbidragsmottagare 25-64 (%) per landskap",
               "% av åldersgruppen", "#FFCA28", "q9_social_assistance_province.png")
 
 # Q10 Skolavhoppningsfrekvens

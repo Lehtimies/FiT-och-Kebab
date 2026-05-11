@@ -14,9 +14,9 @@ Detta projekt analyserar hälso- och välfärdsdata från Finland för perioden 
 - Analys av trend över 2010-2023 på riksnivå
 - Resultat: Linjediagram över tid
 
-**Q2: Alkoholförsäljning per provins**
-- Vilka provinser har högst alkoholförsäljning per capita?
-- Jämförelse mellan svenska provinser (landskap)
+**Q2: Alkoholförsäljning per landskap**
+- Vilka landskap har högst alkoholförsäljning per capita?
+- Jämförelse mellan landskap
 - Resultat: Stapeldiagram rangordnat efter försäljningsvolym
 
 **Q3: Högsta alkoholkonsumtion**
@@ -57,9 +57,9 @@ Detta projekt analyserar hälso- och välfärdsdata från Finland för perioden 
 - Trendanalys av välfärdsmottagare
 - Resultat: Linjediagram över tid
 
-**Q9: Socialbidrag per provins**
-- Vilka provinser har högst socialbidragsfrekvenser?
-- Jämförelse mellan provinser
+**Q9: Socialbidrag per landskap**
+- Vilka landskap har högst socialbidragsfrekvenser?
+- Jämförelse mellan landskap
 - Resultat: Stapeldiagram rangordnat efter frekvens
 
 **Q10: Skolavhoppningsfrekvens**
