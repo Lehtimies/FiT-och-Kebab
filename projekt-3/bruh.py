@@ -124,14 +124,14 @@ if not df.empty:
                "Q4: Psykiatriska öppenvårdsbesök / 1 000 invånare, Finland",
                "Besök / 1 000", "#00BCD4", "q4_psychiatric_outpatient.png")
 
-# Q5 Suicidmortalitet
-print("\nQ5: Hur har suicidmortaliteten förändrats över tiden?")
+# Q5 Självmordsmortalitet
+print("\nQ5: Hur har självmordsmortaliteten förändrats över tiden?")
 df = fetch_data(179, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q5: Suicidmortalitet (åldersstandard / 100 000), Finland",
+               "Q5: Självmordsmortalitet (åldersstandard / 100 000), Finland",
                "Dödsfall / 100 000", "#607D8B", "q5_suicide_mortality.png")
 
 # Q6 Psykiatrisk sjukhusvård barn per kön
@@ -153,13 +153,13 @@ if not df_m.empty and not df_f.empty:
     plt.legend(); plt.grid(axis="y", alpha=0.4)
     savefig("q6_youth_mental_health_gender.png")
 
-# Q7 Genomsnittlig suicidmortalitet
-print("\nQ7: Vad var den genomsnittliga suicidmortaliteten mellan 2010 och 2023?")
+# Q7 Genomsnittlig självmordsmortalitet
+print("\nQ7: Vad var den genomsnittliga självmordsmortaliteten mellan 2010 och 2023?")
 df = fetch_data(179, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     avg = nat["value"].mean()
-    print(f"  Genomsnittlig suicidmortalitet 2010-2023: {avg:.1f} per 100 000")
+    print(f"  Genomsnittlig självmordsmortalitet 2010-2023: {avg:.1f} per 100 000")
 
 
 
