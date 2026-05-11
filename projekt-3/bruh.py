@@ -12,6 +12,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 YEARS = list(range(2010, 2024))
 
 
+# Hämtar data från Sotkanet API för en given indikator, år och kön
 def fetch_data(indicator_id, years, gender="total"):
     params = [("indicator", indicator_id), ("genders", gender)]
     for y in years:
@@ -24,15 +25,18 @@ def fetch_data(indicator_id, years, gender="total"):
     return pd.DataFrame(data) if data else pd.DataFrame()
 
 
+# Hämtar alla regioner från Sotkanet API
 def fetch_regions():
     r = requests.get(f"{BASE_URL}/regions", headers=HEADERS)
     return r.json()
 
 
+# Filtrerar fram nationell data och sorterar efter år
 def national_series(df, nat_id):
     return df[df["region"] == nat_id].sort_values("year")
 
 
+# Hämtar senaste värdet per provins och sorterar efter värde, störst först
 def province_latest(df, maa_ids, rmap):
     d = df[df["region"].isin(maa_ids)].copy()
     d = d.sort_values("year", ascending=False).drop_duplicates("region")
@@ -40,6 +44,7 @@ def province_latest(df, maa_ids, rmap):
     return d.dropna(subset=["value"]).sort_values("value", ascending=False)
 
 
+# Sparar aktuell matplotlib-figur till output-mappen och stänger den
 def savefig(filename):
     path = os.path.join(OUTPUT_DIR, filename)
     plt.tight_layout()
@@ -48,6 +53,7 @@ def savefig(filename):
     print(f"  Sparad: {path}")
 
 
+# Skapar ett linjediagram med smart y-axel och sparar det som en PNG-fil
 def line_chart(x, y, title, ylabel, color, filename):
     plt.figure(figsize=(9, 4))
     plt.plot(x, y, marker="o", color=color, linewidth=2)
@@ -66,6 +72,7 @@ def line_chart(x, y, title, ylabel, color, filename):
     savefig(filename)
 
 
+# Skapar ett horisontellt stapeldiagram sorterat med högst värde överst och sparar det
 def bar_chart(names, values, title, xlabel, color, filename):
     plt.figure(figsize=(10, 6))
     plt.barh(list(names), list(values), color=color)
