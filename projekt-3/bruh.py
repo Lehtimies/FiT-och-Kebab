@@ -93,8 +93,8 @@ MAA_IDS = [r["id"] for r in regions_raw if r.get("category") == "MAAKUNTA"]
 
 
 # Q1 Alkohol konsumption
-print("\nQ1: Hur har alkoholkonsumtionen per capita förändrats på nationell nivå?")
-df = fetch_data(1806, YEARS)
+print("\nQ1: Hur har alkoholkonsumtionen per capita förändrats på nationell nivå? (Över 15 åriga)")
+df = fetch_data(3943, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
@@ -113,8 +113,8 @@ if not df.empty:
               "Liter / invånare", "#FF9800", "q2_alcohol_sales_province.png")
 
 # Q3 Högsta alkoholkonsumtion
-print("\nQ3: Vilket år hade högst alkoholkonsumtion på nationell nivå?")
-df = fetch_data(1806, YEARS)
+print("\nQ3: Vilket år hade högst alkoholkonsumtion på nationell nivå (per capita)?")
+df = fetch_data(3943, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     peak = nat.loc[nat["value"].idxmax()]
@@ -122,8 +122,8 @@ if not df.empty:
 
 
 # Q4 Psykiatriska öppenvårdsbesök
-print("\nQ4: Hur har psykiatriska öppenvårdsbesök förändrats på nationell nivå?")
-df = fetch_data(1272, YEARS)
+print("\nQ4: Hur har mängden vårdbesök för mentala hälsoproblem förändrats på nationell nivå?")
+df = fetch_data(2458, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
@@ -133,7 +133,7 @@ if not df.empty:
 
 # Q5 Självmordsmortalitet
 print("\nQ5: Hur har självmordsmortaliteten förändrats över tiden?")
-df = fetch_data(179, YEARS)
+df = fetch_data(3106, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
@@ -162,7 +162,7 @@ if not df_m.empty and not df_f.empty:
 
 # Q7 Genomsnittlig självmordsmortalitet
 print("\nQ7: Vad var den genomsnittliga självmordsmortaliteten mellan 2010 och 2023?")
-df = fetch_data(179, YEARS)
+df = fetch_data(3106, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     avg = nat["value"].mean()
@@ -191,34 +191,34 @@ if not df.empty:
               "% av åldersgruppen", "#FFCA28", "q9_social_assistance_province.png")
 
 # Q10 Skolavhoppningsfrekvens
-print("\nQ10: Vad är den nuvarande skolavhoppningsfrekvensen bland 17-24 åringar?")
-df = fetch_data(234, YEARS)
+print("\nQ10: Vad är den nuvarande rekvensen individer utanför utbildningen bland 17-24 åringar?")
+df = fetch_data(3219, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     latest = nat.iloc[-1]
-    print(f"  Senaste året {int(latest['year'])}: {latest['value']:.1f}% utan kvalifikation")
+    print(f"  Senaste året {int(latest['year'])}: {latest['value']:.1f}% ")
 
 
 
 
 # Q11 Skolavhoppningsfrekvens trend
-print("\nQ11: Hur har skolavhoppningsfrekvensen bland 17-24 åringar förändrats över tiden?")
-df = fetch_data(234, YEARS)
+print("\nQ11: Hur har frekvensen av individer utanför utbildningen bland 17-24 åringar förändrats över tiden?")
+df = fetch_data(3219, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q11: Skolavhoppare i åldern 17-24 (% utan kvalifikation), Finland",
+               "Q11: Individer utanför utbildningen i åldern 17-24 (% utan kvalifikation), Finland",
                "% av åldersgruppen", "#3F51B5", "q11_school_dropouts.png")
 
 # Q12 Ungdomars övervikt
 print("\nQ12: Hur har övervikt/fetma bland 8:e-9:e klassare förändrats över tiden?")
-df = fetch_data(3052, YEARS)
+df = fetch_data(3906, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q12: Överviktiga eller feta 8:e-9:e klassare (%), Finland",
+               "Q12: Överviktiga 8:e-9:e klassare (%), Finland",
                "% av eleverna", "#8BC34A", "q12_youth_overweight.png")
 
 
