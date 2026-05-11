@@ -121,14 +121,14 @@ if not df.empty:
     print(f"  Toppår: {int(peak['year'])} med {peak['value']:.1f} liter per capita")
 
 
-# Q4 Psykiatriska öppenvårdsbesök
+# Q4  Vårdbesök för mentala hälsoproblem
 print("\nQ4: Hur har mängden vårdbesök för mentala hälsoproblem förändrats på nationell nivå?")
 df = fetch_data(2458, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
     print(nat[["year", "value"]].to_string(index=False))
     line_chart(nat["year"], nat["value"],
-               "Q4: Psykiatriska öppenvårdsbesök / 1 000 invånare, Finland",
+               "Q4: Hälsovårds besök på grund av mentala hälsoproblem / 1 000 invånare, Finland",
                "Besök / 1 000", "#00BCD4", "q4_psychiatric_outpatient.png")
 
 # Q5 Självmordsmortalitet
@@ -191,7 +191,7 @@ if not df.empty:
               "% av åldersgruppen", "#FFCA28", "q9_social_assistance_province.png")
 
 # Q10 Skolavhoppningsfrekvens
-print("\nQ10: Vad är den nuvarande rekvensen individer utanför utbildningen bland 17-24 åringar?")
+print("\nQ10: Vad är den nuvarande frekvensen individer utanför utbildningen bland 17-24 åringar?")
 df = fetch_data(3219, YEARS)
 if not df.empty:
     nat = national_series(df, NAT_ID)
