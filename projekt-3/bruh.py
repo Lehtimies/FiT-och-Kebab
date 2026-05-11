@@ -61,7 +61,7 @@ def line_chart(x, y, title, ylabel, color, filename):
     plt.xlabel("År")
     plt.ylabel(ylabel)
     plt.xticks(x, rotation=45)
-    # Smart y-axis: zoom in if the data range is narrow relative to its magnitude
+    # Smart y-axis: om värdena är relativt nära varandra, ge mer utrymme nedanför minsta värdet
     ymin, ymax = min(y), max(y)
     padding = (ymax - ymin) * 0.3 or ymax * 0.1
     if ymin > ymax * 0.2:
